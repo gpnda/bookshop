@@ -97,4 +97,17 @@ class Book
 
         return $this;
     }
+
+    public function asArray(): array
+    {
+        $data = [
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'year' => $this->getYear(),
+            'author' => $this->getAuthor()->getName(),
+            'publisher' => $this->getPublisher()->getName(),
+            'description' => $this->getDescription(),
+        ];
+        return $data;
+    }
 }

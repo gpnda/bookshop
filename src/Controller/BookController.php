@@ -35,29 +35,15 @@ class BookController extends AbstractController
     #[Route('/book/{id}', name: 'app_book')]
     public function getBook(int $id): JsonResponse
     {
-        $book = $this->entityManager->getRepository(Book::class)->find($id);
+        $book = $this->entityManager->getRepository(Book::class)->find($id)->asArray();
         
-        
-
         if (!$book) {
             throw $this->createNotFoundException(
                 'No book found for id '.$id
             );
         }
 
-        $data = [
-            'id' => $book->getId(),
-            'title' => $book->getTitle(),
-            'year' => $book->getYear(),
-            'author' => $book->getAuthor()->getName(),
-            'publisher' => $book->getPublisher()->getName(),
-            'description' => $book->getDescription(),
-        ];
-
-        return $this->json($data);
-
-
-
+        return $this->json($book);
 
     }
 
