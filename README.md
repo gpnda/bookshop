@@ -14,7 +14,9 @@
 - php ./bin/console doctrine:migrations:migrate
 - symfony server:start
 - php ./bin/console seed
+- // перейти по адресу: http://127.0.0.1:8000/books
 - // перейти по адресу: http://127.0.0.1:8000/book/1
+- // контроллер создания автора - пока не работает
 
 
 
