@@ -27,6 +27,10 @@ class Book
     #[ORM\JoinColumn(nullable: false)]
     private ?Author $author = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Publisher $publisher = null;
+
    
  
     public function getId(): ?int
@@ -78,6 +82,18 @@ class Book
     public function setAuthor(?Author $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getPublisher(): ?Publisher
+    {
+        return $this->publisher;
+    }
+
+    public function setPublisher(?Publisher $publisher): static
+    {
+        $this->publisher = $publisher;
 
         return $this;
     }

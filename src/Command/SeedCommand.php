@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use App\Entity\Author;
 use App\Entity\Book;
+use App\Entity\Publisher;
 
 
 
@@ -58,21 +59,21 @@ class SeedCommand extends Command
             array_push($autors, $author);
         }
 
-        // $companies =  [];
-        // for ($i = 0; $i < 10; $i++) {
-        //     $company = new Publisher();
-        //     $company->setName($faker->company());
-        //     $manager->persist($company);
-        //     array_push($companies, $company);
-        // }
+        $publishers =  [];
+        for ($i = 0; $i < 10; $i++) {
+            $publisher = new Publisher();
+            $publisher->setName($faker->company() . " " . $faker->companySuffix());
+            $this->entityManager->persist($publisher);
+            array_push($publishers, $publisher);
+        }
 
         for ($i = 0; $i < 30; $i++) {
             $book = new Book();
             $book->setYear($faker->year($max = 'now'));
-            $book->setTitle($faker->words($nb = 2, $asText = true));
-            $book->setDescription($faker->words($nb = 20, $asText = true));
+            $book->setTitle(ucfirst($faker->words($nb = 2, $asText = true)));
+            $book->setDescription(ucfirst($faker->words($nb = 20, $asText = true)));
             $book->setAuthor($autors[array_rand($autors)]);
-            //$book->setPublisher($companies[array_rand($companies)]);
+            $book->setPublisher($publishers[array_rand($publishers)]);
             $this->entityManager->persist($book);
         }
 
