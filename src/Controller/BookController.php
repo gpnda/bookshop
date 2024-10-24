@@ -10,7 +10,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 
 
-// 2121
 class BookController extends AbstractController
 {
 
