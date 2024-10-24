@@ -45,10 +45,16 @@ class BookController extends AbstractController
             );
         }
 
-        return $this->json([
-            'message' => 'Welcome to your new controller!' . $book->getTitle() ,
-            'path' => 'src/Controller/BookController.php',
-        ]);
+        $data = [
+            'id' => $book->getId(),
+            'title' => $book->getTitle(),
+            'year' => $book->getYear(),
+            'author' => $book->getAuthor()->getName(),
+            'publisher' => $book->getPublisher()->getName(),
+            'description' => $book->getDescription(),
+        ];
+
+        return $this->json($data);
 
 
 
