@@ -1,9 +1,0 @@
-
-###> symfony/framework-bundle ###
-/public/
-/var/
-/vendor/
-/.env
-/.env.*
-!/.env.example
-###< symfony/framework-bundle ###
