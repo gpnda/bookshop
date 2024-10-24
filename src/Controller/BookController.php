@@ -22,17 +22,21 @@ class BookController extends AbstractController
     }
 
 
-    #[Route('/books', name: 'app_book')]
+    #[Route('/books', name: 'books_list')]
     public function index(): JsonResponse
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/BookController.php',
-        ]);
+
+        $books = $this->entityManager->getRepository(Book::class)->findAll();
+
+        $data = [];
+        foreach ($books as $book) {
+            $data[] = $book->asArray();
+        }
+        return $this->json($data);
     }
 
 
-    #[Route('/book/{id}', name: 'app_book')]
+    #[Route('/book/{id}', name: 'book_info')]
     public function getBook(int $id): JsonResponse
     {
         $book = $this->entityManager->getRepository(Book::class)->find($id)->asArray();
