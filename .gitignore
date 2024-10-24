@@ -1,0 +1,6 @@
+
+###> symfony/framework-bundle ###
+/var/
+/vendor/
+/.env.*
+###< symfony/framework-bundle ###
