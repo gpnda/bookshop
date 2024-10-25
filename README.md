@@ -31,6 +31,6 @@
             "publisher":"1",
             "description":"jfihfdslfh ahfdsl fhla hernfv reoiavnoirea nvoiera"
         }
-        Валидация на путое название книги и странный год издания.
+        Валидация на путое название книги и неверный год издания.
 
 
