@@ -43,7 +43,7 @@ class AuthorController extends AbstractController
         $author = $this->entityManager->getRepository(Author::class)->find($id);
         
         if ($author) {
-            // Здесь надо проверить что можно безопасно удалить автора, без наружения целостности данных
+            // Здесь надо проверить что можно безопасно удалить автора, без нарушения целостности данных
             $this->entityManager->remove($author);
             $this->entityManager->flush();
             $response = $this->json(["result" => "Author deleted"]);
