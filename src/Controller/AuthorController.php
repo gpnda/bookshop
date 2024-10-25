@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,8 +21,17 @@ class AuthorController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+
+
+
+
+/*  
+{
+    "name":"Roger Zelazny"
+}
+*/
     #[Route('/api/v1/author_create', name: 'author_create', methods: ['POST'])]
-    public function new(Request $request, ValidatorInterface $validator): Response
+    public function new(Request $request, ValidatorInterface $validator): JsonResponse
     {
         $data = json_decode($request->getContent());
         $author =  new Author();

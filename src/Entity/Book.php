@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\BookRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -32,7 +34,24 @@ class Book
     private ?Publisher $publisher = null;
 
    
- 
+
+    
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addPropertyConstraint('title', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('year', new Assert\Range(
+            ['min' => 0,
+            'max' => (int)date("Y"),
+            'notInRangeMessage' => 'Valid year must be from {{ min }} to {{ max }} year.',
+            ]
+        ));
+        
+        // Ошибки на подобии указания несуществующего автора или публишера ловить не буду
+        // мне кажется на этом слое приложение должно максимально демонстративно
+        // обрушиваться при плохих данных. Тут выбросит SQL ошибку по идее.
+        
+    }
+
     public function getId(): ?int
     {
         return $this->id;
