@@ -22,5 +22,15 @@
         }
     Тут только английские буквы и пробелы, цифр и спецсимволов в имени нельзя, (проверка работы валидатора).
 
+- POST: http://127.0.0.1:8000/api/v1/book_create
+    JSON body:
+        {
+            "title":"vvvvvvvv vtttttt",
+            "author":"1",
+            "year":"2024",
+            "publisher":"1",
+            "description":"jfihfdslfh ahfdsl fhla hernfv reoiavnoirea nvoiera"
+        }
+        Валидация на путое название книги и странный год издания.
 
 
