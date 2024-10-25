@@ -23,6 +23,51 @@ class AuthorController extends AbstractController
 
 
 
+    #[Route('/api/v1/authors', name: 'authors_list', methods: ['GET'])]
+    public function index(): JsonResponse
+    {
+
+        $authors = $this->entityManager->getRepository(Author::class)->findAll();
+
+        $data = [];
+        foreach ($authors as $author) {
+            $data[] = $author->asArray();
+        }
+        return $this->json($data);
+    }
+
+
+    #[Route('/api/v1/author/{id}', name: 'author_delete', methods: ['DELETE'])]
+    public function deleteAuthor(int $id): JsonResponse
+    {
+        $author = $this->entityManager->getRepository(Author::class)->find($id);
+        
+        if ($author) {
+            // Здесь надо проверить что можно безопасно удалить автора, без наружения целостности данных
+            $this->entityManager->remove($author);
+            $this->entityManager->flush();
+            $response = $this->json(["result" => "Author deleted"]);
+        } else {
+            $response = $this->json(["Author not found"], 404);
+        }
+        return $response;
+    }
+
+    #[Route('/api/v1/author/{id}', name: 'author_info', methods: ['GET'])]
+    public function getAuthor(int $id): JsonResponse
+    {
+        $author = $this->entityManager->getRepository(Author::class)->find($id);
+        
+        if ($author) {
+            $response = $this->json($author->asArray());
+        } else {
+            $response = $this->json(["Author not found"], 404);
+        }
+        return $response;
+    }
+
+
+
 
 
 /*  

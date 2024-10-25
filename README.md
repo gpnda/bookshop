@@ -32,5 +32,6 @@
             "description":"jfihfdslfh ahfdsl fhla hernfv reoiavnoirea nvoiera"
         }
         Валидация на путое название книги и неверный год издания.
-
-
+- GET: http://127.0.0.1:8000/api/v1/authors
+- GET: http://127.0.0.1:8000/api/v1/author/1
+- DELETE: http://127.0.0.1:8000/api/v1/author/1

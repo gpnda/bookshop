@@ -42,4 +42,13 @@ class Author
 
         return $this;
     }
+
+    public function asArray(): array
+    {
+        $data = [
+            'id' => $this->getId(),
+            'name' => $this->getName(),            
+        ];
+        return $data;
+    }
 }
