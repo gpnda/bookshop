@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Author;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+
 class AuthorController extends AbstractController
 {
 
@@ -18,36 +21,23 @@ class AuthorController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/author_create', name: 'author_create', methods: ['POST'])]
-    public function new(Request $request): Response
+    #[Route('/api/v1/author_create', name: 'author_create', methods: ['POST'])]
+    public function new(Request $request, ValidatorInterface $validator): Response
     {
-
-        
-        
-
-        // Непонятно, почемуто тут $request->request пустой, а данные прилетают в $request->query
-        // профайлер бы вклчить для API как нибудь, посмотреть что там происходит
         $data = json_decode($request->getContent());
         $author =  new Author();
         $author->setName($data->name);
-        $this->entityManager->persist($author);
-        $this->entityManager->flush();
+        $errors = $validator->validate($author);
 
-        
-        
-
-        // Обработка данных из запроса (если необходимо)
-
-        $response = new Response(null, Response::HTTP_OK);
-        $response->headers->set('Content-Type', 'application/json');
-
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+            $response = $this->json($errorsString);
+        } else {
+            $this->entityManager->persist($author);
+            $this->entityManager->flush();
+            $response = $this->json("Ok");
+        }
         return $response;
 
-
-
-
-        // return $this->render('author/index.html.twig', [
-        //     'controller_name' => 'AuthorController',
-        // ]);
     }
 }

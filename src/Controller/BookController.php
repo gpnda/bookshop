@@ -38,16 +38,14 @@ class BookController extends AbstractController
     #[Route('/api/v1/book/{id}', name: 'book_info', methods: ['GET'])]
     public function getBook(int $id): JsonResponse
     {
-        $book = $this->entityManager->getRepository(Book::class)->find($id)->asArray();
+        $book = $this->entityManager->getRepository(Book::class)->find($id);
         
-        if (!$book) {
-            throw $this->createNotFoundException(
-                'No book found for id '.$id
-            );
+        if ($book) {
+            $response = $this->json($book->asArray());
+        } else {
+            $response = $this->json(["Book not found"], 404);
         }
-
-        return $this->json($book);
-
+        return $response;
     }
 
     #[Route('/api/v1/book/{id}', name: 'book_delete', methods: ['DELETE'])]
@@ -55,16 +53,14 @@ class BookController extends AbstractController
     {
         $book = $this->entityManager->getRepository(Book::class)->find($id);
         
-        if (!$book) {
-            throw $this->createNotFoundException(
-                'No book found for id '.$id
-            );
+        if ($book) {
+            $this->entityManager->remove($book);
+            $this->entityManager->flush();
+            $response = $this->json(["result" => "Book deleted"]);
+        } else {
+            $response = $this->json(["Book not found"], 404);
         }
-
-        $this->entityManager->remove($book);
-        $this->entityManager->flush();
-        
-        return $this->json(["result" => "Book deleted"]);
+        return $response;
 
     }
 
