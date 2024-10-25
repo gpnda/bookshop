@@ -5,18 +5,21 @@
 
 
 # Установка:
-- git init .
-- git remote add origin https://github.com/gpnda/bookshop.git
-- git pull origin master
+- git clone https://github.com/gpnda/bookshop.git .
 - composer install
 - // создать копию файла .env и переименовать в .env.local  
 - // скорректировать в .env.local  - закомментировать postgre, раскомментировать sqlite
 - php ./bin/console doctrine:migrations:migrate
-- symfony server:start
 - php ./bin/console seed
-- // перейти по адресу: http://127.0.0.1:8000/books
-- // перейти по адресу: http://127.0.0.1:8000/book/1
-- // контроллер создания автора - пока не работает
+- symfony server:start
+- GET: http://127.0.0.1:8000/api/v1/books
+- GET: http://127.0.0.1:8000/api/v1/book/1
+- DELETE: http://127.0.0.1:8000/api/v1/book/1
+- POST: http://127.0.0.1:8000/api/v1/author_create
+    JSON body:
+        {
+            "name":"All  5 iiiii"
+        }
 
 
 
