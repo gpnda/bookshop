@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Author;
+use App\Entity\Book;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
@@ -43,10 +44,17 @@ class AuthorController extends AbstractController
         $author = $this->entityManager->getRepository(Author::class)->find($id);
         
         if ($author) {
-            // Здесь надо проверить что можно безопасно удалить автора, без нарушения целостности данных
-            $this->entityManager->remove($author);
-            $this->entityManager->flush();
-            $response = $this->json(["result" => "Author deleted"]);
+            $myid = $author->getId();
+            $mybooks = $this->entityManager->getRepository(Book::class)->findByAuthorId($myid);
+            // защита целостности данных
+            if (count($mybooks)){
+                $response = $this->json(["Author has books and can not be deleted!"], 200);
+            } else {
+                $this->entityManager->remove($author);
+                $this->entityManager->flush();
+                $response = $this->json(["result" => "Author deleted"]);
+            }
+            
         } else {
             $response = $this->json(["Author not found"], 404);
         }
