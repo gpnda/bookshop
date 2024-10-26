@@ -66,5 +66,35 @@ class PublisherController extends AbstractController
     }
 
 
+
+
+    #[Route('/api/v1/publisher_modify', name: 'publisher_modify', methods: ['PUT'])]
+    public function modifyPublisher(Request $request, ValidatorInterface $validator): JsonResponse
+    {
+        $data = json_decode($request->getContent());
+        
+        $publisher = $this->entityManager->getRepository(Publisher::class)->find($data->id);
+
+        if ($publisher) {
+            $publisher->setName($data->name);
+            $errors = $validator->validate($publisher);
+            
+            if (count($errors) > 0) {
+                $errorsString = (string) $errors;
+                $response = $this->json($errorsString);
+            } else {
+                $this->entityManager->persist($publisher);
+                $this->entityManager->flush();
+                $response = $this->json("Publisher modified");
+            }
+            
+        } else {
+            $response = $this->json(["Publisher not found"], 404);
+        }
+        return $response;
+    }
+
+
+
     
 }

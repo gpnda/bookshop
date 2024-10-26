@@ -7,8 +7,6 @@
 # Установка:
 - git clone https://github.com/gpnda/bookshop.git .
 - composer install
-- // создать копию файла .env и переименовать в .env.local  
-- // скорректировать в .env.local  - закомментировать postgre, раскомментировать sqlite
 - php ./bin/console doctrine:migrations:migrate
 - php ./bin/console seed
 - symfony server:start
@@ -38,8 +36,13 @@
 - GET: http://127.0.0.1:8000/api/v1/publishers
 - GET: http://127.0.0.1:8000/api/v1/publisher/1
 - DELETE: http://127.0.0.1:8000/api/v1/publisher/1
+- PUT: http://127.0.0.1:8000/api/v1/publisher_modify
+    {
+        "id": 1,
+        "name": "Nice Brand New Publisher name"
+    }
 
 Осталось:
-- Редактирование издателя
 - Команда по удалению всех авторов, у которых нет книг.
 - Отказ в удалении если есть связанные сущности
+- Непонятно почему /api/v1/books и аналогичные методы дважды фиксируются в профайлере, видимо все GET
