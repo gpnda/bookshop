@@ -26,6 +26,7 @@ use App\Entity\Publisher;
 )]
 class SeedCommand extends Command
 {
+    private $entityManager;
     public function __construct(EntityManagerInterface $entityManager)
     {
         parent::__construct();

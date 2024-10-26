@@ -8,7 +8,7 @@
 - git clone https://github.com/gpnda/bookshop.git .
 - composer install
 - php ./bin/console doctrine:migrations:migrate
-- php ./bin/console seed
+- php ./bin/console seed (команда наполняет таблицы случайно сгенерированными записями)
 - symfony server:start
 - GET: http://127.0.0.1:8000/api/v1/books
 - GET: http://127.0.0.1:8000/api/v1/book/1
@@ -41,8 +41,8 @@
         "id": 1,
         "name": "Nice Brand New Publisher name"
     }
+- php ./bin/console clean-up-authors (команда удаляет авторов без книг)
 
-Осталось:
-- Команда по удалению всех авторов, у которых нет книг.
+Формально все выполнено, но осталось:
 - Отказ в удалении если есть связанные сущности
 - Непонятно почему /api/v1/books и аналогичные методы дважды фиксируются в профайлере, видимо все GET
