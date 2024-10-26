@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Publisher;
+use App\Entity\Book;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PublisherController extends AbstractController
@@ -55,10 +56,17 @@ class PublisherController extends AbstractController
         $publisher = $this->entityManager->getRepository(Publisher::class)->find($id);
         
         if ($publisher) {
-            // Здесь надо проверить что можно безопасно удалить издателя, без нарушения целостности данных
-            $this->entityManager->remove($publisher);
-            $this->entityManager->flush();
-            $response = $this->json(["result" => "Publisher deleted"]);
+            $myid = $publisher->getId();
+            $mybooks = $this->entityManager->getRepository(Book::class)->findByPublisherId($myid);
+            // защита целостности данных
+            if (count($mybooks)){
+                $response = $this->json(["Publisher has books and can not be deleted!"], 200);
+            } else {
+                $this->entityManager->remove($publisher);
+                $this->entityManager->flush();
+                $response = $this->json(["result" => "Publisher deleted"]);
+            }
+
         } else {
             $response = $this->json(["Publisher not found"], 404);
         }
