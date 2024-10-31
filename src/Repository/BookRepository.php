@@ -21,32 +21,26 @@ class BookRepository extends ServiceEntityRepository
         */
        public function findByAuthorId($author_id): array
        {
-           return $this->createQueryBuilder('b')
-               ->andWhere('b.author = ?1')
-               ->setParameter(1, $author_id)
-               ->getQuery()
-               ->getResult()
-           ;
+        //    return $this->createQueryBuilder('b')
+        //        ->andWhere('b.author = ?1')
+        //        ->setParameter(1, $author_id)
+        //        ->getQuery()
+        //        ->getResult()
+        //    ;
+            return $this->findBy(['author'=>$author_id]);
        }
 
 
        public function findByPublisherId($publisher_id): array
        {
-           return $this->createQueryBuilder('b')
-               ->andWhere('b.publisher = ?1')
-               ->setParameter(1, $publisher_id)
-               ->getQuery()
-               ->getResult()
-           ;
+        //    return $this->createQueryBuilder('b')
+        //        ->andWhere('b.publisher = ?1')
+        //        ->setParameter(1, $publisher_id)
+        //        ->getQuery()
+        //        ->getResult()
+        //    ;
+            return $this->findBy(['publisher'=>$publisher_id]);
        }
 
-    //    public function findOneBySomeField($value): ?Book
-    //    {
-    //        return $this->createQueryBuilder('b')
-    //            ->andWhere('b.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+
 }
