@@ -19,7 +19,7 @@ class BookRepository extends ServiceEntityRepository
        /**
         * @return Book[] Returns an array of Book objects
         */
-       public function findByAuthorId($author_id): array
+       public function findByAuthorId($id): array
        {
         //    return $this->createQueryBuilder('b')
         //        ->andWhere('b.author = ?1')
@@ -27,11 +27,11 @@ class BookRepository extends ServiceEntityRepository
         //        ->getQuery()
         //        ->getResult()
         //    ;
-            return $this->findBy(['author'=>$author_id]);
+            return $this->findBy(['author'=>$id]);
        }
 
 
-       public function findByPublisherId($publisher_id): array
+       public function findByPublisherId($id): array
        {
         //    return $this->createQueryBuilder('b')
         //        ->andWhere('b.publisher = ?1')
@@ -39,7 +39,7 @@ class BookRepository extends ServiceEntityRepository
         //        ->getQuery()
         //        ->getResult()
         //    ;
-            return $this->findBy(['publisher'=>$publisher_id]);
+            return $this->findBy(['publisher'=>$id]);
        }
 
 
